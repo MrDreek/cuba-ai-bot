@@ -55,7 +55,7 @@ class Weather extends BaseModel
         foreach ($directories as $item) {
             $key = $item->type;
             if (isset($fact->$key)) {
-                $fact->$key = $item->value;
+                $fact->$key = $item->key === $fact->$key ? $item->value : $fact->$key;
             }
         }
         return $fact;
