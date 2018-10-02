@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 /**
  * @property string updated_at
  * @property string value
@@ -11,7 +13,7 @@ class MoneyRate extends BaseModel
 {
     protected $collection = 'money_rate_collection';
 
-    private const MONEY = [
+    public const MONEY = [
         'CUP_RUB',
         'CUC_RUB',
         'CUP_USD',
@@ -20,32 +22,36 @@ class MoneyRate extends BaseModel
 
     public const URL_TEMPLATE = 'http://free.currencyconverterapi.com/api/v5/convert?q=${q}&compact=y';
 
-    private static function saveMoneyRate($rate, $name, $update)
+    private static function saveMoneyRate($rates, $update)
     {
         $rateDb = $update ?: new self;
-        $rateDb->name = key($rate);
-        $rateDb->value = $rate->$name->val;
+        foreach ($rates as $item) {
+            $key = key($item);
+            $rateDb->$key = $item->$key->val;
+        }
         $rateDb->updated_at = time();
         $rateDb->save();
     }
 
     public static function findOrCreate()
     {
-        foreach (self::MONEY as $item) {
-            /** @var MoneyRate $obj */
-            $obj = static::where('name', $item)->first();
-            if ($obj === null) {
-                self::getNewRate($item);
-            } else if (!$obj->checkValid()) {
-                self::getNewRate($item, $obj);
-            }
+        $moneyRate = self::first();
+        if ($moneyRate === null) {
+            self::updateRate();
+        } else if (!$moneyRate->checkValid()) {
+            self::updateRate($moneyRate);
         }
     }
 
-    private static function getNewRate($name, $update = null)
+    private static function updateRate($update = null)
     {
-        $url = str_replace(['${q}'], $name, self::URL_TEMPLATE);
-        $rate = self::curlTo($url);
-        self::saveMoneyRate($rate, $name, $update);
+        foreach (self::MONEY as $item) {
+            $url = str_replace(['${q}'], $item, self::URL_TEMPLATE);
+            $rates[] = self::curlTo($url);
+        }
+        if ($rates === null) {
+            throw new NotFoundHttpException();
+        }
+        self::saveMoneyRate($rates, $update);
     }
 }

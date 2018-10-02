@@ -20,8 +20,10 @@ class MoneyRate extends JsonResource
      */
     public function toArray($request): array
     {
-        return [
-            $this->name => $this->value
-        ];
+        $moneyRates = [];
+        foreach (\App\MoneyRate::MONEY as $item) {
+            $moneyRates[$item] = $this->$item;
+        }
+        return $moneyRates;
     }
 }

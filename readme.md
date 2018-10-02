@@ -24,11 +24,14 @@ POST /api/weather/get-weather
 }
 ```
 
-POST /api/money/get-rate
+GET /api/money/get-rate
 
+Ответ:
 ```json
 {
-	"from":"CUP",
-	"to": "RUB"
+"CUP_RUB": 2.468985,
+"CUC_RUB": 65.462301,
+"CUP_USD": 0.037736,
+"CUC_USD": 1
 }
 ```
