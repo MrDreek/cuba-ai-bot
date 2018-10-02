@@ -12,7 +12,7 @@
 
 _**php artisan config:cache**_  // команда для кеширования настроек окружения
 
-_**php artisan migrate **_  // Применение миграций
+_**php artisan migrate**_  // Применение миграций 
 
 ## Endpoint
 
