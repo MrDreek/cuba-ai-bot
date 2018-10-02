@@ -1,0 +1,350 @@
+[
+  {
+    "name": "Havana",
+    "nameRus": "Гавана",
+    "location": {
+      "longitude": "-82.372385",
+      "latitude": "23.1066"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Santiago de Cuba",
+    "nameRus": "Сантьяго-де-Куба",
+    "location": {
+      "longitude": "-75.8301537",
+      "latitude": "20.01693"
+    },
+    "airport": {
+      "code": "SCU",
+      "airport_name": "Antonio Maceo International Airport"
+    }
+  },
+  {
+    "name": "Camagüey",
+    "nameRus": "Камагуэй",
+    "location": {
+      "longitude": "-77.7452081",
+      "latitude": "21.2167247"
+    },
+    "airport": {
+      "code": "CMW",
+      "airport_name": "Ignacio Agramonte International Airport"
+    }
+  },
+  {
+    "name": "Holguin",
+    "nameRus": "Ольгин",
+    "location": {
+      "longitude": "-76.2594981",
+      "latitude": "20.8795129"
+    },
+    "airport": {
+      "code": "HOG",
+      "airport_name": "Frank País International Airport"
+    }
+  },
+  {
+    "name": "Guantanamo",
+    "nameRus": "Гуантанамо",
+    "location": {
+      "longitude": "-74.8741045",
+      "latitude": "20.1455917"
+    },
+    "airport": {
+      "code": "GAO",
+      "airport_name": "Mariana Grajales Airport"
+    }
+  },
+  {
+    "name": "Santa Clara",
+    "nameRus": "Санта-Клара",
+    "location": {
+      "longitude": "-79.9416549",
+      "latitude": "22.424398"
+    },
+    "airport": {
+      "code": "SNU",
+      "airport_name": "Abel Santamaría Airport"
+    }
+  },
+  {
+    "name": "Las Tunas",
+    "nameRus": "Лас-Тунас",
+    "location": {
+      "longitude": "-76.9182097",
+      "latitude": "21.0605162"
+    },
+    "airport": {
+      "code": "VTU",
+      "airport_name": "Hermanos Ameijeiras Airport"
+    }
+  },
+  {
+    "name": "Bayamo",
+    "nameRus": "Баямо",
+    "location": {
+      "longitude": "-76.6297189",
+      "latitude": "20.3719163"
+    },
+    "airport": {
+      "code": "BYM",
+      "airport_name": "Carlos Manuel de Céspedes Airport"
+    }
+  },
+  {
+    "name": "Cienfuegos",
+    "nameRus": "Сьенфуэгос",
+    "location": {
+      "longitude": "-80.4437781",
+      "latitude": "22.1599753"
+    },
+    "airport": {
+      "code": "CFG",
+      "airport_name": "Jaime González Airport"
+    }
+  },
+  {
+    "name": "Pinar Del Rio",
+    "nameRus": "Пинар-дель-Рио",
+    "location": {
+      "longitude": "-83.6880257",
+      "latitude": "22.4133651"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Pinar Del Rio",
+    "nameRus": "Матансас",
+    "location": {
+      "longitude": "-81.5322149",
+      "latitude": "23.0303395"
+    },
+    "airport": {
+      "code": "VRA",
+      "airport_name": "Juan Gualberto Gómez International Airport"
+    }
+  },
+  {
+    "name": "Ciego de Avila",
+    "nameRus": "Сьего-де-Авила",
+    "location": {
+      "longitude": "-78.5660852",
+      "latitude": "21.9329515"
+    },
+    "airport": {
+      "code": "CCC",
+      "airport_name": "Jardines del Rey Airport"
+    }
+  },
+  {
+    "name": "Sancti Spiritus",
+    "nameRus": "Санкти-Спиритус",
+    "location": {
+      "longitude": "-79.4703885",
+      "latitude": "21.9938214"
+    },
+    "airport": {
+      "code": "SNU",
+      "airport_name": "Abel Santamaría Airport"
+    }
+  },
+  {
+    "name": "Manzanillo",
+    "nameRus": "Мансанильо",
+    "location": {
+      "longitude": "-77.1197521",
+      "latitude": "20.3332172"
+    },
+    "airport": {
+      "code": "MZO",
+      "airport_name": "Manzanillo, Oriente"
+    }
+  },
+  {
+    "name": "Cardenas",
+    "nameRus": "Карденас",
+    "location": {
+      "longitude": "-81.2133262",
+      "latitude": "23.0365513"
+    },
+    "airport": {
+      "code": "VRA",
+      "airport_name": "Juan Gualberto Gómez International Airport"
+    }
+  },
+  {
+    "name": "Moa",
+    "nameRus": "Моа",
+    "location": {
+      "longitude": "-74.9501034",
+      "latitude": "20.6574573"
+    },
+    "airport": {
+      "code": "MOA",
+      "airport_name": "Orestes Acosta Airport"
+    }
+  },
+  {
+    "name": "Nueva Girona",
+    "nameRus": "Нуэва-Херона",
+    "location": {
+      "longitude": "-82.8101975",
+      "latitude": "21.8788609"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Colon",
+    "nameRus": "Колон",
+    "location": {
+      "longitude": "-80.9041817",
+      "latitude": "22.7238445"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Florida",
+    "nameRus": "Флорида",
+    "location": {
+      "longitude": "-78.219132",
+      "latitude": "21.5149423"
+    },
+    "airport": {
+      "code": "CCC",
+      "airport_name": "Jardines del Rey Airport"
+    }
+  },
+  {
+    "name": "Artemis",
+    "nameRus": "Артемиса",
+    "location": {
+      "longitude": "-82.9931607",
+      "latitude": "22.7522903"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Moron",
+    "nameRus": "Морон",
+    "location": {
+      "longitude": "-78.6228504",
+      "latitude": "22.0897108"
+    },
+    "airport": {
+      "code": "CCC",
+      "airport_name": "Jardines del Rey Airport"
+    }
+  },
+  {
+    "name": "Puerto Padres",
+    "nameRus": "Пуэрто-Падре",
+    "location": {
+      "longitude": "-76.606611",
+      "latitude": "21.1878548"
+    },
+    "airport": {
+      "code": "HOG",
+      "airport_name": "Frank País International Airport"
+    }
+  },
+  {
+    "name": "Guines",
+    "nameRus": "Гуинес",
+    "location": {
+      "longitude": "-82.0243657",
+      "latitude": "22.8429803"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Trinidad",
+    "nameRus": "Тринидад",
+    "location": {
+      "longitude": "-79.9808143",
+      "latitude": "21.7960343"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "San Luis",
+    "nameRus": "Сан-Луис",
+    "location": {
+      "longitude": "-75.8475853",
+      "latitude": "20.1871897"
+    },
+    "airport": {
+      "code": "SCU",
+      "airport_name": "Antonio Maceo International Airport"
+    }
+  },
+  {
+    "name": "San Cristobal",
+    "nameRus": "Сан-Кристобаль",
+    "location": {
+      "longitude": "-83.0415078",
+      "latitude": "22.7129122"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Haguye Grande",
+    "nameRus": "Хагуэй-Гранде",
+    "location": {
+      "longitude": "-81.1278814",
+      "latitude": "22.5267186"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "San jose de las lajas",
+    "nameRus": "Сан-Хосе-де-лас-Лахас",
+    "location": {
+      "longitude": "-82.1523251",
+      "latitude": "22.9647344"
+    },
+    "airport": {
+      "code": "HAV",
+      "airport_name": "José Martí International Airport"
+    }
+  },
+  {
+    "name": "Plasetas",
+    "nameRus": "Пласетас",
+    "location": {
+      "longitude": "-79.6558242",
+      "latitude": "22.3179093"
+    },
+    "airport": {
+      "code": "SNU",
+      "airport_name": "Abel Santamaría Airport"
+    }
+  }
+]
