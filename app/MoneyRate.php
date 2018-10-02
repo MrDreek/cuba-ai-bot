@@ -11,6 +11,13 @@ class MoneyRate extends BaseModel
 {
     protected $collection = 'money_rate_collection';
 
+    private const MONEY = [
+        'CUP_RUB',
+        'CUC_RUB',
+        'CUP_USD',
+        'CUC_USD',
+    ];
+
     public const URL_TEMPLATE = 'http://free.currencyconverterapi.com/api/v5/convert?q=${q}&compact=y';
 
     private static function saveMoneyRate($rate, $name, $update)
@@ -20,27 +27,25 @@ class MoneyRate extends BaseModel
         $rateDb->value = $rate->$name->val;
         $rateDb->updated_at = time();
         $rateDb->save();
-        return $rateDb;
     }
 
-    public static function findOrCreate($name)
+    public static function findOrCreate()
     {
-        /** @var MoneyRate $obj */
-        $obj = static::where('name', $name)->first();
-        if ($obj === null) {
-            return self::getNewRate($name);
+        foreach (self::MONEY as $item) {
+            /** @var MoneyRate $obj */
+            $obj = static::where('name', $item)->first();
+            if ($obj === null) {
+                self::getNewRate($item);
+            } else if (!$obj->checkValid()) {
+                self::getNewRate($item, $obj);
+            }
         }
-        if (($obj !== null) && $obj->checkValid()) {
-            return $obj;
-        }
-
-        return self::getNewRate($name, $obj);
     }
 
     private static function getNewRate($name, $update = null)
     {
         $url = str_replace(['${q}'], $name, self::URL_TEMPLATE);
         $rate = self::curlTo($url);
-        return self::saveMoneyRate($rate, $name, $update);
+        self::saveMoneyRate($rate, $name, $update);
     }
 }

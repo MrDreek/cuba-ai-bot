@@ -8,22 +8,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MoneyRateRequest;
+use App\Http\Resources\MoneyRates as MoneyRateCollection;
 use App\MoneyRate;
 use Illuminate\Routing\Controller;
-use App\Http\Resources\MoneyRate as MoneyRateResource;
 
 class MoneyRateController extends Controller
 {
     /**
      * Метод возвращает курс валют по заданым параметрам из базы, либо получает их с апи, записывает их в базу  и возвращает
-     * @param MoneyRateRequest $request
-     * @return MoneyRateResource
+     * @return MoneyRateCollection
      */
-    public function getRate(MoneyRateRequest $request)
+    public function getRate()
     {
-        $name = $request->from . '_' . $request->to;
-        $rate = MoneyRate::findOrCreate($name);
-        return new MoneyRateResource($rate);
+        MoneyRate::findOrCreate();
+        return new MoneyRateCollection(MoneyRate::all());
     }
 }

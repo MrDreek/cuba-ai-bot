@@ -13,7 +13,7 @@
 
 
 Route::prefix('money')->group(function () {
-    Route::post('get-rate','MoneyRateController@getRate')->name('get-rate');
+    Route::get('get-rate','MoneyRateController@getRate')->name('get-rate');
 });
 
 Route::prefix('weather')->group(function () {
