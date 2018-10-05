@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CubaCities extends Migration
@@ -13,15 +11,19 @@ class CubaCities extends Migration
      */
     public function up()
     {
+        \App\City::truncate();
         $path = storage_path() . '/app/cities.json';
-        $json = json_decode(file_get_contents($path), true);
+        $json = json_decode(file_get_contents($path));
 
-        foreach ($json as $item) {
-            $city =  new \App\City;
-            $city->name = $item['name'];
-            $city->nameRus = $item['nameRus'];
-            $city->location = $item['location'];
-            $city->airport = $item['airport'];
+        foreach ($json as $key => $item) {
+            $city = new \App\City;
+            $city->name = $item->name;
+
+            if (isset($item->location)) {
+                $city->location = $item->location;
+            }
+
+            $city->iata = $key;
             $city->save();
         }
     }

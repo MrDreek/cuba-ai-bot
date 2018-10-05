@@ -34,13 +34,16 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ValidationException) {
             $error = [];
             foreach ($exception->validator->errors()->getMessages() as $key => $message) {
-                $error[$key]= implode(', ', $message);
+                $error[$key] = implode(', ', $message);
             }
             return response()->json([
                 'error' => $error
             ], 400);
         }
 
-        return parent::render($request, $exception);
+        return response()->json([
+            'message' => 'Не обработанная ошибка',
+            'error' => $exception
+        ], 500);
     }
 }

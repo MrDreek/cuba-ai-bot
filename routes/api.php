@@ -20,4 +20,8 @@ Route::prefix('weather')->group(function () {
     Route::post('get-weather','WeatherController@getWeather')->name('get-weather');
 });
 
-Route::get('update-city-list','Api@updateCites')->name('update-city-list');
+Route::prefix('ticket')->group(function () {
+    Route::post('search','TicketController@search')->name('search');
+    Route::post('check','TicketController@checkStatus')->name('check');
+    Route::post('get-result','TicketController@getResult')->name('get-result');
+});

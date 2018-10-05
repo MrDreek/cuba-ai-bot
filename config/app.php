@@ -30,6 +30,8 @@ return [
 
     'yandex_weather_key' => env('YANDEX_WEATHER_KEY'),
     'amadeus_key' => env('AMADEUS_KEY'),
+    'awad_host' => env('AWAD_HOST'),
+    'awad_key' => env('AWAD_KEY'),
 
     'proxy' => env('PROXY'),                   // нужен ли прокси(true or false)
     'proxy_url' => env('PROXY_URL'),           // url прокси

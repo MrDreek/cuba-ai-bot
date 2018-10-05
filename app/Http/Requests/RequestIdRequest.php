@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property mixed from
  * @property mixed to
  */
-class MoneyRateRequest extends FormRequest
+class RequestIdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,16 +28,15 @@ class MoneyRateRequest extends FormRequest
     public function rules()
     {
         return [
-            'from' => 'required',
-            'to' => 'required',
+            'requestId' => 'required|integer',
         ];
     }
 
     public function messages()
     {
         return [
-            'from.required' => 'Требуется указать из какой валюты нужно произвести конвертацию',
-            'to.required' => 'Требуется указать в какую валюту нужно произвести конвертацию',
+            'requestId.required' => 'Требуется указать requestId',
+            'requestId.integer' => 'requestId должен быть числом',
         ];
     }
 }

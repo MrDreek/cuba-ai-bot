@@ -31,6 +31,18 @@ class BaseModel extends Eloquent
         return json_decode($response->get());
     }
 
+    protected static function xmlGet($url)
+    {
+        $response = Curl::to($url);
+
+        // если нужен прокси
+        if (config('app.proxy')) {
+            $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'), config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
+        }
+
+        return  json_decode(json_encode(simplexml_load_string($response->get())));
+    }
+
     /**
      * Если текущее время минус время прошлой записи меньше 12 часов, то запись валидная
      * @return bool
