@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * @property mixed from
  * @property mixed to
+ * @property mixed requestId
  */
 class RequestIdRequest extends FormRequest
 {

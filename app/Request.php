@@ -103,6 +103,11 @@ class Request extends BaseModel
 
         $results = self::xmlGet($url);// xml зло!
 
+        if(isset($results->{'@attributes'}->Error))
+        {
+            return false;
+        }
+
         $this->link = $results->SearchRequestURL;
         $tickets = [];
 

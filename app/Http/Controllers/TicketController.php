@@ -40,5 +40,7 @@ class TicketController extends Controller
         if (isset($myRequest->tickets) || $myRequest->getResult()) {
             return new RequestResource($myRequest);
         }
+
+        return response()->json(['messsage' => 'Результат ещё не готов'], 404);
     }
 }
