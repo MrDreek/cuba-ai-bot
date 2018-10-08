@@ -150,5 +150,93 @@
       "longitude": "-79.6558242",
       "latitude": "22.3179093"
     }
+  },
+  {
+    "name": "Сантьяго",
+    "iata": "SCU",
+    "location": {
+      "longitude": "-75.8301537",
+      "latitude": "20.01693"
+    }
+  },
+  {
+    "name": "Гавана",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-82.372385",
+      "latitude": "23.1066"
+    }
+  },
+  {
+    "name": "Варадеро",
+    "iata": "VRA",
+    "location": {
+      "longitude": "-81.1885293",
+      "latitude": "23.179858"
+    }
+  },
+  {
+    "name": "Голгуин",
+    "iata": "HOG",
+    "location": {
+      "longitude": "-76.2594981",
+      "latitude": "20.8795129"
+    }
+  },
+  {
+    "name": "Кайо-Коко",
+    "iata": "CCC",
+    "location": {
+      "longitude": "-78.3041",
+      "latitude": "22.3053"
+    }
+  },
+  {
+    "name": "Кайо Ларго Дель Сур",
+    "iata": "CYO",
+    "location": {
+      "longitude": "-18.3100",
+      "latitude": "21.3622"
+    }
+  },
+  {
+    "name": "Камагуэй",
+    "iata": "CMW",
+    "location": {
+      "longitude": "-77.7452081",
+      "latitude": "21.2167247"
+    }
+  },
+  {
+    "name": "Нуэва-Герона",
+    "iata": "GER",
+    "location": {
+      "longitude": "-82.8404",
+      "latitude": "21.53005"
+    }
+  },
+  {
+    "name": "Мансанильо",
+    "iata": "MZO",
+    "location": {
+      "longitude": "-77.1197521",
+      "latitude": "20.3332172"
+    }
+  },
+  {
+    "name": "Баракоа",
+    "iata": "BCA",
+    "location": {
+      "longitude": "-74.2944",
+      "latitude": "20.2039"
+    }
+  },
+  {
+    "name": "Гуантанамо",
+    "iata": "GAO",
+    "location": {
+      "longitude": "-74.8741045",
+      "latitude": "20.1455917"
+    }
   }
 ]
