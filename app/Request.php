@@ -113,7 +113,11 @@ class Request extends BaseModel
 
         $airlines = [];
         foreach ($results->Referenses->Airline as $item) {
-            $airlines[$item->{'@attributes'}->C] = $item->{'@attributes'}->N;
+            if(isset($item->{'@attributes'})){
+                $airlines[$item->{'@attributes'}->C] = $item->{'@attributes'}->N;
+            } else {
+                $airlines[$item->C] = $item->N;
+            }
         }
 
         foreach ($results->F as $item) {
