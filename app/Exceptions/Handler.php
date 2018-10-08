@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -39,6 +40,13 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'error' => $error
             ], 400);
+        }
+
+        if($exception instanceof NotFoundHttpException)
+        {
+            return response()->json([
+                'message' => 'Неправильный URL'
+            ], 404);
         }
 
         return response()->json([
