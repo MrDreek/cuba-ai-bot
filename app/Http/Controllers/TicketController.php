@@ -18,8 +18,8 @@ class TicketController extends Controller
 {
     public function search(TicketRequest $request)
     {
-        if ((int)$request->AD + (int)$request->CN + (int)$request->IN > 4) {
-            return response()->json(['message' => 'Максимальное число участков маршрута – 4']);
+        if ((int)$request->AD + (int)$request->CN + (int)$request->IN > 8) {
+            return response()->json(['message' => 'Максимальное число участков маршрута – 8']);
         }
         return response()->json(Request::createRequest($request));
     }

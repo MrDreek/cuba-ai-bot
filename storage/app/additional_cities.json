@@ -1,0 +1,154 @@
+[
+  {
+    "name": "Пинар-дель-Рио",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-83.6880257",
+      "latitude": "22.4133651"
+    }
+  },
+  {
+    "name": "Матансас",
+    "iata": "VRA",
+    "location": {
+      "longitude": "-81.5322149",
+      "latitude": "23.0303395"
+    }
+  },
+  {
+    "name": "Сьего-де-Авила",
+    "iata": "CCC",
+    "location": {
+      "longitude": "-78.5660852",
+      "latitude": "21.9329515"
+    }
+  },
+  {
+    "name": "Санкти-Спиритус",
+    "iata": "SNU",
+    "location": {
+      "longitude": "-79.4703885",
+      "latitude": "21.9938214"
+    }
+  },
+  {
+    "name": "Карденас",
+    "iata": "VRA",
+    "location": {
+      "longitude": "-81.2133262",
+      "latitude": "23.0365513"
+    }
+  },
+  {
+    "name": "Моа",
+    "iata": "MOA",
+    "location": {
+      "longitude": "-74.9501034",
+      "latitude": "20.6574573"
+    }
+  },
+  {
+    "name": "Нуэва-Херона",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-82.8101975",
+      "latitude": "21.8788609"
+    }
+  },
+  {
+    "name": "Колон",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-80.9041817",
+      "latitude": "22.7238445"
+    }
+  },
+  {
+    "name": "Флорида",
+    "iata": "CCC",
+    "location": {
+      "longitude": "-78.219132",
+      "latitude": "21.5149423"
+    }
+  },
+  {
+    "name": "Артемиса",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-82.9931607",
+      "latitude": "22.7522903"
+    }
+  },
+  {
+    "name": "Морон",
+    "iata": "CCC",
+    "location": {
+      "longitude": "-78.6228504",
+      "latitude": "22.0897108"
+    }
+  },
+  {
+    "name": "Пуэрто-Падре",
+    "iata": "HOG",
+    "location": {
+      "longitude": "-76.606611",
+      "latitude": "21.1878548"
+    }
+  },
+  {
+    "name": "Гуинес",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-82.0243657",
+      "latitude": "22.8429803"
+    }
+  },
+  {
+    "name": "Тринидад",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-79.9808143",
+      "latitude": "21.7960343"
+    }
+  },
+  {
+    "name": "Сан-Луис",
+    "iata": "SCU",
+    "location": {
+      "longitude": "-75.8475853",
+      "latitude": "20.1871897"
+    }
+  },
+  {
+    "name": "Сан-Кристобаль",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-83.0415078",
+      "latitude": "22.7129122"
+    }
+  },
+  {
+    "name": "Хагуэй-Гранде",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-81.1278814",
+      "latitude": "22.5267186"
+    }
+  },
+  {
+    "name": "Сан-Хосе-де-лас-Лахас",
+    "iata": "HAV",
+    "location": {
+      "longitude": "-82.1523251",
+      "latitude": "22.9647344"
+    }
+  },
+  {
+    "name": "Пласетас",
+    "iata": "SNU",
+    "location": {
+      "longitude": "-79.6558242",
+      "latitude": "22.3179093"
+    }
+  }
+]

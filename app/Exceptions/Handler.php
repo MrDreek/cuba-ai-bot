@@ -43,7 +43,7 @@ class Handler extends ExceptionHandler
 
         return response()->json([
             'message' => 'Не обработанная ошибка',
-            'error' => $exception
+            'error' => $exception->getMessage()
         ], 500);
     }
 }
