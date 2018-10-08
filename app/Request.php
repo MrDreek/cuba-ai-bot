@@ -70,8 +70,9 @@ class Request extends BaseModel
             $myRequest->departureDate = $request->departure_date;
             $myRequest->returnDate = $request->return_date;
             $myRequest->save();
+            return ['requestId' => $requestId->Id];
         }
-        return ['requestId' => $requestId->Id];
+        return ['error' => $requestId->Error];
     }
 
     public function check()
