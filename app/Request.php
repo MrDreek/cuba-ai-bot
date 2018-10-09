@@ -103,9 +103,14 @@ class Request extends BaseModel
 
         $results = self::xmlGet($url);// xml зло!
 
-        if(isset($results->{'@attributes'}->Error))
-        {
-            return false;
+        if (isset($results->{'@attributes'}->Error)) {
+            if ($results->{'@attributes'}->Error === 'NoFaresFound') {
+                return ['message' => 'Билеты не найдены!'];
+            }
+            if ($results->{'@attributes'}->Error === 'SearchNotComplete') {
+                return ['message' => 'Результат не готов!'];
+            }
+            return ['message' => $results->{'@attributes'}->Error];
         }
 
         $this->link = $results->SearchRequestURL;
@@ -113,7 +118,7 @@ class Request extends BaseModel
 
         $airlines = [];
         foreach ($results->Referenses->Airline as $item) {
-            if(isset($item->{'@attributes'})){
+            if (isset($item->{'@attributes'})) {
                 $airlines[$item->{'@attributes'}->C] = $item->{'@attributes'}->N;
             } else {
                 $airlines[$item->C] = $item->N;

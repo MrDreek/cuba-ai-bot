@@ -37,8 +37,13 @@ class TicketController extends Controller
             return response()->json(['messsage' => 'Запрос не найден'], 404);
         }
 
-        if (isset($myRequest->tickets) || $myRequest->getResult()) {
+        if (isset($myRequest->tickets)) {
             return new RequestResource($myRequest);
+        }
+
+        $result = $myRequest->getResult();
+        if(\is_array($result)){
+            return response()->json($result, 400);
         }
 
         return response()->json(['messsage' => 'Результат ещё не готов'], 404);
