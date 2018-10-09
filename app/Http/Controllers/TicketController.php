@@ -43,7 +43,7 @@ class TicketController extends Controller
 
         $result = $myRequest->getResult();
         if (\is_array($result)) {
-            return response()->json($result, $result->code);
+            return response()->json($result['message'], $result['code']);
         }
 
         return new RequestResource($myRequest);

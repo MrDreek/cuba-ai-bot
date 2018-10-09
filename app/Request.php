@@ -108,7 +108,7 @@ class Request extends BaseModel
                 return ['message' => 'Билеты не найдены!', 'code' => 204];
             }
             if ($results->{'@attributes'}->Error === 'SearchNotComplete') {
-                return ['message' => 'Результат не готов!', 'code' => 204];
+                return ['message' => 'Результат не готов!', 'code' => 102];
             }
             return ['message' => $results->{'@attributes'}->Error, 'code' => 505];
         }
