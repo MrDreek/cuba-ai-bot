@@ -105,12 +105,12 @@ class Request extends BaseModel
 
         if (isset($results->{'@attributes'}->Error)) {
             if ($results->{'@attributes'}->Error === 'NoFaresFound') {
-                return ['message' => 'Билеты не найдены!'];
+                return ['message' => 'Билеты не найдены!', 'code' => 204];
             }
             if ($results->{'@attributes'}->Error === 'SearchNotComplete') {
-                return ['message' => 'Результат не готов!'];
+                return ['message' => 'Результат не готов!', 'code' => 204];
             }
-            return ['message' => $results->{'@attributes'}->Error];
+            return ['message' => $results->{'@attributes'}->Error, 'code' => 505];
         }
 
         $this->link = $results->SearchRequestURL;

@@ -42,10 +42,10 @@ class TicketController extends Controller
         }
 
         $result = $myRequest->getResult();
-        if(\is_array($result)){
-            return response()->json($result, 400);
+        if (\is_array($result)) {
+            return response()->json($result, $result->code);
         }
 
-        return response()->json(['messsage' => 'Результат ещё не готов'], 404);
+        return new RequestResource($myRequest);
     }
 }
