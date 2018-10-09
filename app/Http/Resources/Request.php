@@ -23,6 +23,7 @@ class Request extends JsonResource
     {
         return [
             'link' => $this->link,
+            'code' => 200,
             'results' => Ticket::where('requestId', $this->requestId)->paginate(5)
         ];
     }
