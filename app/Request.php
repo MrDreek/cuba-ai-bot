@@ -110,7 +110,7 @@ class Request extends BaseModel
             if ($results->{'@attributes'}->Error === 'SearchNotComplete') {
                 return ['message' => 'Результат не готов!', 'code' => 102];
             }
-            return ['message' => $results->{'@attributes'}->Error, 'code' => 505];
+            return ['message' => $results->{'@attributes'}->Error, 'code' => 500];
         }
 
         $this->link = $results->SearchRequestURL;
@@ -125,7 +125,13 @@ class Request extends BaseModel
             }
         }
 
-        foreach ($results->F as $item) {
+        if ($results->F instanceof \stdClass) {
+            $arr = [0 => $results->F];
+        } else {
+            $arr = $results->F;
+        }
+
+        foreach ($arr as $item) {
             $arrTo = [];
             if (!isset($item->L->V->{'@attributes'})) {
                 foreach ($item->L->V as $l) {
@@ -178,6 +184,7 @@ class Request extends BaseModel
                 }
             }
         }
+
 
         $this->tickets = $tickets;
         $this->save();
