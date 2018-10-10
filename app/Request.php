@@ -139,7 +139,8 @@ class Request extends BaseModel
                         'department_time' => $l->{'@attributes'}->DT,
                         'department_date' => $this->departureDate,
                         'flight_time' => $l->{'@attributes'}->TT,
-                        'route' => $l->{'@attributes'}->SA
+                        'route' => $l->{'@attributes'}->SA,
+//                        'routeName' => City::getRouteName($l->{'@attributes'}->SA)
                     ];
                 }
             } else {
@@ -147,7 +148,8 @@ class Request extends BaseModel
                     'department_time' => $item->L->V->{'@attributes'}->DT,
                     'department_date' => $this->departureDate,
                     'flight_time' => $item->L->V->{'@attributes'}->TT,
-                    'route' => $item->L->V->{'@attributes'}->SA
+                    'route' => $item->L->V->{'@attributes'}->SA,
+//                    'routeName' => City::getRouteName($item->L->V->{'@attributes'}->SA)
                 ];
             }
 
@@ -159,17 +161,21 @@ class Request extends BaseModel
                         'department_time' => $r->{'@attributes'}->DT,
                         'department_date' => $this->returnDate,
                         'flight_time' => $r->{'@attributes'}->TT,
-                        'route' => $r->{'@attributes'}->SA
+                        'route' => $r->{'@attributes'}->SA,
+//                        'routeName' => City::getRouteName($r->{'@attributes'}->SA)
                     ];
                 }
             } else {
                 $arrFrom[] = [
                     'department_time' => $item->R->V->{'@attributes'}->DT,
-                    'department_date' => $this->departureDate,
+                    'department_date' => $this->returnDate,
                     'flight_time' => $item->R->V->{'@attributes'}->TT,
-                    'route' => $item->R->V->{'@attributes'}->SA
+                    'route' => $item->R->V->{'@attributes'}->SA,
+//                    'routeName' => City::getRouteName($item->R->V->{'@attributes'}->SA)
                 ];
             }
+
+            //TODO: routeName - iata airport replace City Name
 
             foreach ($arrTo as $to) {
                 foreach ($arrFrom as $from) {
