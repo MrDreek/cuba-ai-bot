@@ -73,7 +73,7 @@ class Tour extends BaseModel
                 $food = [];
 
                 foreach ($hotel->pansion_prices as $key => $pansion_price) {
-                    $food[] = [$key => self::FOOD[$key]];
+                    $food[$key] = $key . '(' . self::FOOD[$key] . ')';
                 }
 
                 $hotels[] = [
@@ -82,7 +82,7 @@ class Tour extends BaseModel
                     'stars' => $hotel->hotel->stars,
                     'min_price' => $hotel->min_price,
                     'max_price' => $hotel->max_price,
-                    'food' => $food,
+                    'food' => implode(', ', $food),
                     'link' => self::LEVEL_TRAVEL_DOMAIN . $hotel->hotel->link
                 ];
 
