@@ -29,15 +29,14 @@ class RequestIdRequest extends FormRequest
     public function rules()
     {
         return [
-            'requestId' => 'required|integer',
+            'requestId' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'requestId.required' => 'Требуется указать requestId',
-            'requestId.integer' => 'requestId должен быть числом',
+            'requestId.required' => 'Требуется указать requestId'
         ];
     }
 }

@@ -1,0 +1,96 @@
+<?php
+
+namespace App;
+
+/**
+ * @property  mixed request_id
+ */
+class Tour extends BaseModel
+{
+    protected $collection = 'tour_collection';
+
+    private const START_SEARCH_URL = 'https://api.level.travel/search/enqueue?';
+    private const CHECK_URL = 'https://api.level.travel/search/status?request_id=';
+    private const GET_RESULTS_URL = 'https://api.level.travel/search/get_grouped_hotels?request_id=';
+
+    private const LEVEL_TRAVEL_DOMAIN = 'https://level.travel';
+
+    private const TO_CONTRY = 'to_country=CU';
+
+    private const FOOD = [
+        'OB' => 'Без питания',
+        'BB' => 'Завтрак',
+        'HB' => 'Полупансион',
+        'FB' => 'Полный пансион',
+        'AI' => 'Всё включено',
+    ];
+
+    public static function startSearch($params)
+    {
+        $url = self::START_SEARCH_URL . self::TO_CONTRY;
+
+        $from_city = City::where('name_ru', $params['from_city'])->first()->iata;
+        $url .= "&from_city=$from_city";
+        unset($params['from_city']);
+
+        $to_city = City::where('name_ru', $params['to_city'])->first()->iata;
+        $url .= "&to_city=$to_city";
+        unset($params['to_city']);
+
+        foreach ($params as $key => $item) {
+            $url .= '&' . $key . '=' . $item;
+        }
+
+        $response = self::curlToWithTourHeaders($url);
+
+        $tour = new self;
+        $tour->request_id = $response->request_id;
+        $tour->save();
+
+        return $tour->request_id;
+    }
+
+    public function checkStatus()
+    {
+        $url = self::CHECK_URL . $this->request_id;
+        $response = self::curlToWithTourHeaders($url);
+
+        if ($response->success) {
+            return ['message' => 'Результат готов!'];
+        }
+
+        return ['message' => 'Результат не готов!', 'error' => $response->error];
+    }
+
+    public function getResults()
+    {
+        $url = self::GET_RESULTS_URL . $this->request_id;
+        $response = self::curlToWithTourHeaders($url);
+
+        if (isset($response->hotels)) {
+            $hotels = [];
+            foreach ($response->hotels as $hotel) {
+                $food = [];
+
+                foreach ($hotel->pansion_prices as $key => $pansion_price) {
+                    $food[] = [$key => self::FOOD[$key]];
+                }
+
+                $hotels[] = [
+                    'name' => $hotel->hotel->name,
+                    'desc' => $hotel->hotel->desc,
+                    'stars' => $hotel->hotel->stars,
+                    'min_price' => $hotel->min_price,
+                    'max_price' => $hotel->max_price,
+                    'food' => $food,
+                    'link' => self::LEVEL_TRAVEL_DOMAIN . $hotel->hotel->link
+                ];
+
+
+            }
+
+            return $hotels;
+        }
+        return ['error' => $response->error];
+    }
+}

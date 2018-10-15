@@ -31,6 +31,24 @@ class BaseModel extends Eloquent
         return json_decode($response->get());
     }
 
+    protected static function curlToWithTourHeaders($url)
+    {
+        $response = Curl::to($url);
+
+        $key = config('app.level_travel');
+        $response = $response->withHeader('Accept: application/vnd.leveltravel.v3');
+        $response = $response->withHeader('Authorization: Token token="' . $key . '"');
+
+
+        // если нужен прокси
+        if (config('app.proxy')) {
+            $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'), config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
+        }
+
+        $test = $response->get();
+        return json_decode($test);
+    }
+
     protected static function xmlGet($url)
     {
         $response = Curl::to($url);
@@ -40,7 +58,7 @@ class BaseModel extends Eloquent
             $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'), config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
         }
 
-        return  json_decode(json_encode(simplexml_load_string($response->get())));
+        return json_decode(json_encode(simplexml_load_string($response->get())));
     }
 
     /**

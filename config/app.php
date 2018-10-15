@@ -32,6 +32,7 @@ return [
     'amadeus_key' => env('AMADEUS_KEY'),
     'awad_host' => env('AWAD_HOST'),
     'awad_key' => env('AWAD_KEY'),
+    'level_travel' => env('LEVEL_TRAVEL'),
 
     'proxy' => env('PROXY'),                   // нужен ли прокси(true or false)
     'proxy_url' => env('PROXY_URL'),           // url прокси

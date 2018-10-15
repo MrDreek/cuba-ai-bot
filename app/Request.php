@@ -33,8 +33,8 @@ class Request extends BaseModel
         $departureDate_day = $departureDate->format('d');
         $departureDate_month = $departureDate->format('m');
 
-        $iataDepartureCity = City::where('name', $request->departure_city)->firstOrFail()->iata;
-        $iataArrivalCity = City::where('name', $request->arrival_city)->firstOrFail()->iata;
+        $iataDepartureCity = City::where('name_ru', $request->departure_city)->firstOrFail()->iata;
+        $iataArrivalCity = City::where('name_ru', $request->arrival_city)->firstOrFail()->iata;
 
         $to = $departureDate_day . $departureDate_month . $iataDepartureCity . $iataArrivalCity;
         $from = '';

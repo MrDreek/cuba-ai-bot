@@ -25,3 +25,10 @@ Route::prefix('ticket')->group(function () {
     Route::post('check','TicketController@checkStatus')->name('check');
     Route::post('get-result','TicketController@getResult')->name('get-result');
 });
+
+Route::prefix('tour')->group(function () {
+    Route::get('get-city','TourController@getCity')->name('get-city');
+    Route::post('search','TourController@search')->name('search');
+    Route::post('check','TourController@check')->name('check');
+    Route::post('get-result','TourController@getResult')->name('get-result');
+});
