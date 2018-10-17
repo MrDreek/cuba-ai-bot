@@ -45,7 +45,10 @@ class Tour extends BaseModel
 
         $tour = new self;
         $tour->request_id = $response->request_id;
-        $tour->save();
+
+        if (!$tour->save()) {
+            return ['message' => 'Ошибка сохранения тура', 'code' => 500];
+        }
 
         return $tour->request_id;
     }
