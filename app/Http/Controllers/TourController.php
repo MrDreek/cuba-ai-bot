@@ -39,8 +39,8 @@ class TourController extends Controller
     {
         $tour = Tour::where('request_id', $request->requestId)->first();
         if ($tour === null) {
-            return response()->json(['message' => 'Запрос не найден']);
+            return response()->json(['message' => 'Запрос не найден'], 404);
         }
-        return response()->json($tour->getResults());
+        return response()->json($tour->getResults(), 200);
     }
 }

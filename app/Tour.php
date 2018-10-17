@@ -56,10 +56,16 @@ class Tour extends BaseModel
         $response = self::curlToWithTourHeaders($url);
 
         if ($response->success) {
-            return ['message' => 'Результат готов!'];
+            foreach ($response->status as $status) {
+                if ($status === 'completed' || $status === 'cached' || $status === 'all_filtered') {
+                    return ['message' => 'Результат готов!', 'code' => 200];
+                }
+            }
+
+            return ['message' => 'Ничего не найдено', 'code' => 204];
         }
 
-        return ['message' => 'Результат не готов!', 'error' => $response->error];
+        return ['message' => 'Внутренняя ошибка сервера', 'error' => $response->error];
     }
 
     public function getResults()
@@ -68,6 +74,15 @@ class Tour extends BaseModel
         $response = self::curlToWithTourHeaders($url);
 
         if (isset($response->hotels)) {
+            if (empty($response->hotels)) {
+                $r = [
+                    'code' => 204,
+                    'message' => 'Ничего не найдено!'
+                ];
+
+                return $r;
+            }
+
             $hotels = [];
             foreach ($response->hotels as $hotel) {
                 $food = [];
@@ -85,12 +100,15 @@ class Tour extends BaseModel
                     'food' => implode(', ', $food),
                     'link' => self::LEVEL_TRAVEL_DOMAIN . $hotel->hotel->link
                 ];
-
-
             }
 
-            return $hotels;
+            $r = [
+                'code' => 200,
+                'results' => $hotels
+            ];
+
+            return $r;
         }
-        return ['error' => $response->error];
+        return ['error' => $response->error, 'code' => 500];
     }
 }
