@@ -24,8 +24,8 @@ class TourRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_city' => 'required',
-            'to_city' => 'string',
+            'from_city' => 'required|exists:cities_collection,name_ru',
+            'to_city' => 'string|exists:cities_collection,name_ru',
             'hotel_ids' => 'string',
             'nights' => 'required|integer',
             'adults' => 'required|integer',
@@ -41,7 +41,9 @@ class TourRequest extends FormRequest
     {
         return [
             'from_city.required' => 'Необходимо указать город вылета',
+            'from_city.exists' => 'Такой горорд не найден',
             'to_city.required' => 'Город назначения должен быть строкой',
+            'to_city.exists' => 'Такой горорд не найден',
             'hotel_ids.required' => 'Id отлелей должны быть перечислены через запятую',
             'nights.required' => 'Необходимо указать количетсво ночей',
             'nights.integer' => 'Количество ночей должно быть числом',

@@ -30,12 +30,12 @@ class Tour extends BaseModel
     {
         $url = self::START_SEARCH_URL . self::TO_CONTRY;
 
-        $from_city = City::where('name_ru', $params['from_city'])->first()->iata;
+        $from_city = City::where('name_ru', $params['from_city'])->firstOrFail()->iata;
         $url .= "&from_city=$from_city";
         unset($params['from_city']);
 
         if (isset($params['to_city'])) {
-            $to_city = City::where('name_ru', $params['to_city'])->first()->iata;
+            $to_city = City::where('name_ru', $params['to_city'])->firstOrFail()->iata;
             $url .= "&to_city=$to_city";
             unset($params['to_city']);
         }
