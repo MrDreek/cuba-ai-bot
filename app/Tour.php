@@ -23,6 +23,7 @@ class Tour extends BaseModel
         'HB' => 'Полупансион',
         'FB' => 'Полный пансион',
         'AI' => 'Всё включено',
+        'RO' => 'Без питания',
     ];
 
     public static function startSearch($params)
@@ -33,9 +34,11 @@ class Tour extends BaseModel
         $url .= "&from_city=$from_city";
         unset($params['from_city']);
 
-        $to_city = City::where('name_ru', $params['to_city'])->first()->iata;
-        $url .= "&to_city=$to_city";
-        unset($params['to_city']);
+        if (isset($params['to_city'])) {
+            $to_city = City::where('name_ru', $params['to_city'])->first()->iata;
+            $url .= "&to_city=$to_city";
+            unset($params['to_city']);
+        }
 
         foreach ($params as $key => $item) {
             $url .= '&' . $key . '=' . $item;
@@ -97,6 +100,7 @@ class Tour extends BaseModel
                 $hotels[] = [
                     'name' => $hotel->hotel->name,
                     'desc' => $hotel->hotel->desc,
+                    'city' => $hotel->hotel->city,
                     'stars' => $hotel->hotel->stars,
                     'min_price' => $hotel->min_price,
                     'max_price' => $hotel->max_price,
