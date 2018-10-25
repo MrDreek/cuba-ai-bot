@@ -33,8 +33,8 @@ class Request extends BaseModel
         $departureDate_day = $departureDate->format('d');
         $departureDate_month = $departureDate->format('m');
 
-        $iataDepartureCity = City::where('name_ru', $request->departure_city)->firstOrFail()->iata;
-        $iataArrivalCity = City::where('name_ru', $request->arrival_city)->firstOrFail()->iata;
+        $iataDepartureCity = City::where('name', $request->departure_city)->firstOrFail()->iata;
+        $iataArrivalCity = City::where('name', $request->arrival_city)->firstOrFail()->iata;
 
         $to = $departureDate_day . $departureDate_month . $iataDepartureCity . $iataArrivalCity;
         $from = '';
@@ -136,19 +136,19 @@ class Request extends BaseModel
             if (!isset($item->L->V->{'@attributes'})) {
                 foreach ($item->L->V as $l) {
                     $arrTo[] = [
-                        'department_time' => $l->{'@attributes'}->DT,
+                        'department_time' => $l->{'@attributes'}->DT ?? null,
                         'department_date' => $this->departureDate,
-                        'flight_time' => $l->{'@attributes'}->TT,
-                        'route' => $l->{'@attributes'}->SA,
+                        'flight_time' => $l->{'@attributes'}->TT ?? null,
+                        'route' => $l->{'@attributes'}->SA ?? null,
 //                        'routeName' => City::getRouteName($l->{'@attributes'}->SA)
                     ];
                 }
             } else {
                 $arrTo[] = [
-                    'department_time' => $item->L->V->{'@attributes'}->DT,
+                    'department_time' => $item->L->V->{'@attributes'}->DT ?? null,
                     'department_date' => $this->departureDate,
-                    'flight_time' => $item->L->V->{'@attributes'}->TT,
-                    'route' => $item->L->V->{'@attributes'}->SA,
+                    'flight_time' => $item->L->V->{'@attributes'}->TT ?? null,
+                    'route' => $item->L->V->{'@attributes'}->SA ?? null,
 //                    'routeName' => City::getRouteName($item->L->V->{'@attributes'}->SA)
                 ];
             }
@@ -158,19 +158,19 @@ class Request extends BaseModel
             if (!isset($item->R->V->{'@attributes'})) {
                 foreach ($item->R->V as $r) {
                     $arrFrom[] = [
-                        'department_time' => $r->{'@attributes'}->DT,
+                        'department_time' => $r->{'@attributes'}->DT ?? null,
                         'department_date' => $this->returnDate,
-                        'flight_time' => $r->{'@attributes'}->TT,
-                        'route' => $r->{'@attributes'}->SA,
+                        'flight_time' => $r->{'@attributes'}->TT ?? null,
+                        'route' => $r->{'@attributes'}->SA ?? null,
 //                        'routeName' => City::getRouteName($r->{'@attributes'}->SA)
                     ];
                 }
             } else {
                 $arrFrom[] = [
-                    'department_time' => $item->R->V->{'@attributes'}->DT,
+                    'department_time' => $item->R->V->{'@attributes'}->DT ?? null,
                     'department_date' => $this->returnDate,
-                    'flight_time' => $item->R->V->{'@attributes'}->TT,
-                    'route' => $item->R->V->{'@attributes'}->SA,
+                    'flight_time' => $item->R->V->{'@attributes'}->TT ?? null,
+                    'route' => $item->R->V->{'@attributes'}->SA ?? null,
 //                    'routeName' => City::getRouteName($item->R->V->{'@attributes'}->SA)
                 ];
             }

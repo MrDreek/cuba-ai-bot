@@ -18,12 +18,8 @@ class CubaCities extends Migration
         foreach ($json as $key => $item) {
             $city = new \App\City;
             $city->name = $item->name;
-
-            if (isset($item->location)) {
-                $city->location = $item->location;
-            }
-
             $city->iata = $key;
+
             $city->save();
         }
     }

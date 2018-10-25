@@ -24,8 +24,8 @@ class TourRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_city' => 'required|exists:cities_collection,name_ru',
-            'to_city' => 'string|exists:cities_collection,name_ru',
+            'from_city' => 'required|exists:cities_collection,name',
+            'to_city' => 'string|exists:cities_collection,name',
             'hotel_ids' => 'string',
             'nights' => 'required|integer',
             'adults' => 'required|integer',

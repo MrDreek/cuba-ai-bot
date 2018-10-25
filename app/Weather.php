@@ -14,7 +14,7 @@ class Weather extends BaseModel
 
     private static function getWeather($name, $update = null)
     {
-        $city = City::where('name_ru', $name)->firstOrFail();
+        $city = City::where('name', $name)->firstOrFail();
         $url = str_replace(array('${lat}', '${lon}'), array($city->location['latitude'], $city->location['longitude']), self::URL_WEATHER);
         return self::saveWeather(self::curlTo($url, true)->fact, $name, $update);
     }

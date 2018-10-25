@@ -7,7 +7,6 @@ namespace App;
  * @property  mixed name
  * @property  mixed iata
  * @property array|mixed airports
- * @property mixed name_ru
  * @method static where(string $string, $departure_city)
  */
 class City extends BaseModel

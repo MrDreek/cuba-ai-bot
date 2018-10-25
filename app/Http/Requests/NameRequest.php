@@ -27,7 +27,7 @@ class NameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|exists:cities_collection,name_ru'
+            'name' => 'required|exists:cities_collection,name'
         ];
     }
 
