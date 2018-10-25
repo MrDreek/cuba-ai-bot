@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Http\Requests\RequestIdRequest;
 use App\Http\Requests\TourRequest;
+use App\Http\Resources\Tour as TourResource;
+use App\Request;
 use App\Tour;
 use Illuminate\Routing\Controller;
 
@@ -19,7 +21,6 @@ class TourController extends Controller
             return response()->json(['status' => 'OK']);
         }
     }
-
 
     public function search(TourRequest $request)
     {
@@ -37,10 +38,23 @@ class TourController extends Controller
 
     public function getResult(RequestIdRequest $request)
     {
-        $tour = Tour::where('request_id', $request->requestId)->first();
-        if ($tour === null) {
+        $req = Request::where('request_id', $request->requestId)->first();
+        if ($req === null) {
             return response()->json(['message' => 'Запрос не найден'], 404);
         }
-        return response()->json($tour->getResults(), 200);
+
+        if (isset($req->tours)) {
+            return new TourResource($req);
+        }
+
+        $result = Tour::getResults($req);
+        if (\is_array($result)) {
+            return response()->json($result, 200);
+        }
+
+        return new TourResource($req);
+
     }
+
+
 }

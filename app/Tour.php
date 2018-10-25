@@ -2,9 +2,6 @@
 
 namespace App;
 
-/**
- * @property  mixed request_id
- */
 class Tour extends BaseModel
 {
     protected $collection = 'tour_collection';
@@ -16,6 +13,8 @@ class Tour extends BaseModel
     private const LEVEL_TRAVEL_DOMAIN = 'https://level.travel';
 
     private const TO_CONTRY = 'to_country=CU';
+
+    protected $hidden = ['_id', 'requestId'];
 
     private const FOOD = [
         'OB' => 'Без питания',
@@ -46,14 +45,14 @@ class Tour extends BaseModel
 
         $response = self::curlToWithTourHeaders($url);
 
-        $tour = new self;
-        $tour->request_id = $response->request_id;
+        $request = new Request();
+        $request->request_id = $response->request_id;
 
-        if (!$tour->save()) {
+        if (!$request->save()) {
             return ['message' => 'Ошибка сохранения тура', 'code' => 500];
         }
 
-        return $tour->request_id;
+        return $request->request_id;
     }
 
     public function checkStatus()
@@ -74,9 +73,9 @@ class Tour extends BaseModel
         return ['message' => 'Внутренняя ошибка сервера', 'error' => $response->error];
     }
 
-    public function getResults()
+    public static function getResults($req)
     {
-        $url = self::GET_RESULTS_URL . $this->request_id;
+        $url = self::GET_RESULTS_URL . $req->request_id;
         $response = self::curlToWithTourHeaders($url);
 
         if (isset($response->hotels)) {
@@ -97,24 +96,25 @@ class Tour extends BaseModel
                     $food[$key] = $key . '(' . self::FOOD[$key] . ')';
                 }
 
-                $hotels[] = [
-                    'name' => $hotel->hotel->name,
-                    'desc' => $hotel->hotel->desc,
-                    'city' => $hotel->hotel->city,
-                    'stars' => $hotel->hotel->stars,
-                    'min_price' => $hotel->min_price,
-                    'max_price' => $hotel->max_price,
-                    'food' => implode(', ', $food),
-                    'link' => self::LEVEL_TRAVEL_DOMAIN . $hotel->hotel->link
-                ];
+                $tour = new self;
+                $tour->requestId = $req->request_id;
+                $tour->name = $hotel->hotel->name;
+                $tour->desc = $hotel->hotel->desc;
+                $tour->city = $hotel->hotel->city;
+                $tour->stars = $hotel->hotel->stars;
+                $tour->min_price = number_format($hotel->min_price, 2);
+                $tour->max_price = number_format($hotel->max_price, 2);
+                $tour->food = implode(', ', $food);
+                $tour->link = self::LEVEL_TRAVEL_DOMAIN . $hotel->hotel->link;
+                $tour->save();
+
+                $hotels[] = $tour;
             }
 
-            $r = [
-                'code' => 200,
-                'results' => $hotels
-            ];
+            $req->tours = $hotels;
+            $req->save();
 
-            return $r;
+            return true;
         }
         return ['error' => $response->error, 'code' => 500];
     }

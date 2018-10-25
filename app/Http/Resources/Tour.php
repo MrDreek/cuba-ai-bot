@@ -2,14 +2,13 @@
 
 namespace App\Http\Resources;
 
-use App\Ticket;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property mixed requestId
+ * @property mixed request_id
  * @property mixed link
  */
-class Request extends JsonResource
+class Tour extends JsonResource
 {
     public static $wrap = '';
 
@@ -22,9 +21,8 @@ class Request extends JsonResource
     public function toArray($request)
     {
         return [
-            'link' => $this->link,
             'code' => 200,
-            'results' => Ticket::where('requestId', $this->requestId)->paginate(5)
+            'results' => \App\Tour::where('requestId', $this->request_id)->paginate(5)
         ];
     }
 }

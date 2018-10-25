@@ -191,7 +191,6 @@ class Request extends BaseModel
             }
         }
 
-
         $this->tickets = $tickets;
         $this->save();
 
