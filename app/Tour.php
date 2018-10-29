@@ -97,11 +97,12 @@ class Tour extends BaseModel
                 }
 
                 $tour = new self;
-                $tour->requestId = $req->request_id;
-                $tour->name = $hotel->hotel->name;
-                $tour->desc = $hotel->hotel->desc;
-                $tour->city = $hotel->hotel->city;
-                $tour->stars = $hotel->hotel->stars;
+                $tour->requestId = $req->request_id ?? null;
+                $tour->id = $hotel->hotel->id ?? null;
+                $tour->name = $hotel->hotel->name ?? null;
+                $tour->desc = $hotel->hotel->desc ?? null;
+                $tour->city = $hotel->hotel->city ?? null;
+                $tour->stars = $hotel->hotel->stars ?? null;
                 $tour->min_price = number_format($hotel->min_price, 2);
                 $tour->max_price = number_format($hotel->max_price, 2);
                 $tour->food = implode(', ', $food);
