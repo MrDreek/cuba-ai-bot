@@ -163,6 +163,7 @@ return [
          */
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         /*
          * Application Service Providers...
