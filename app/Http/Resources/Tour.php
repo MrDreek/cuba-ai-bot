@@ -22,7 +22,7 @@ class Tour extends JsonResource
     {
         return [
             'code' => 200,
-            'results' => \App\Tour::where('requestId', $this->request_id)->paginate(5)
+            'results' => \App\Tour::where('requestId', $this->request_id)->paginate(3)
         ];
     }
 }
