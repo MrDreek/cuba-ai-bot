@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Helper\DateHelper;
+use DateTime;
+
 class Tour extends BaseModel
 {
     protected $collection = 'tour_collection';
@@ -39,11 +42,20 @@ class Tour extends BaseModel
             unset($params['to_city']);
         }
 
+        $startDate = (new DateTime(DateHelper::parseDate($params['start_date'])))->format('d.m.Y');
+        $url .= '&' . 'start_date' . '=' . $startDate;
+
+        unset($params['start_date']);
+
         foreach ($params as $key => $item) {
             $url .= '&' . $key . '=' . $item;
         }
 
         $response = self::curlToWithTourHeaders($url);
+
+        if ($response === null) {
+            return ['message' => 'Неправельный ответ от сервера АПИ', 'code' => 500];
+        }
 
         $request = new Request();
         $request->request_id = $response->request_id;
@@ -82,7 +94,7 @@ class Tour extends BaseModel
             if (empty($response->hotels)) {
                 $r = [
                     'code' => 204,
-                    'message' => 'Ничего не найдено!'
+                    'message' => 'Ничего не найдено!',
                 ];
 
                 return $r;
