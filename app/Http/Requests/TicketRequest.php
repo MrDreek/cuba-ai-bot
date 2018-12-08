@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CustomDate;
+
 /**
  * @property mixed AD
  * @property mixed CN
@@ -19,8 +21,8 @@ class TicketRequest extends Request
         return [
             'departure_city' => 'required',
             'arrival_city' => 'required',
-            'departure_date' => 'required',
-            'return_date' => 'nullable',
+            'departure_date' => ['required', new CustomDate(request()->field, request()->another_field)],
+            'return_date' => ['nullable', new CustomDate(request()->field, request()->another_field)],
             'AD' => 'integer|min:1|max:6',
             'CN' => 'integer|min:0|max:4',
             'IN' => 'integer|min:0|max:2',

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CustomDate;
+
 class TourRequest extends Request
 {
 
@@ -18,7 +20,7 @@ class TourRequest extends Request
             'hotel_ids' => 'string',
             'nights' => 'required|integer',
             'adults' => 'required|integer',
-            'start_date' => 'required',
+            'start_date' => ['required', new CustomDate(request()->field, request()->another_field)],
             'kids' => 'integer',
             'kids_ages' => 'required_with:kids|string',
             'stars_from' => 'integer|min:1|max:5',
