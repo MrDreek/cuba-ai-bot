@@ -2,15 +2,17 @@
 
 namespace App;
 
+use App\Helper\DateHelper;
 use DateTime;
 
 /**
- * @property int|string requestId
- * @property mixed status
- * @property DateTime departureDate
- * @property DateTime returnDate
- * @property mixed link
+ * @property int|string  requestId
+ * @property mixed       status
+ * @property DateTime    departureDate
+ * @property DateTime    returnDate
+ * @property mixed       link
  * @property array|mixed tickets
+ * @property mixed       request_id
  * @method static where(string $string, string $param)
  */
 class Request extends BaseModel
@@ -24,12 +26,12 @@ class Request extends BaseModel
 
     private const SC = [
         'эконом' => 'E',
-        'бизнес/первый класс' => 'B'
+        'бизнес/первый класс' => 'B',
     ];
 
     public static function createRequest($request)
     {
-        $departureDate = new DateTime($request->departure_date);
+        $departureDate = new DateTime(DateHelper::parseDate($request->departure_date));
         $departureDate_day = $departureDate->format('d');
         $departureDate_month = $departureDate->format('m');
 
@@ -40,7 +42,7 @@ class Request extends BaseModel
         $from = '';
 
         if ($request->return_date !== null) {
-            $returnDate = new DateTime($request->return_date);
+            $returnDate = new DateTime(DateHelper::parseDate($request->return_date));
             $returnDate_day = $returnDate->format('d');
             $returnDate_month = $returnDate->format('m');
 
@@ -140,7 +142,7 @@ class Request extends BaseModel
                         'department_date' => $this->departureDate,
                         'flight_time' => $l->{'@attributes'}->TT ?? null,
                         'route' => $l->{'@attributes'}->SA ?? null,
-//                        'routeName' => City::getRouteName($l->{'@attributes'}->SA)
+                        //                        'routeName' => City::getRouteName($l->{'@attributes'}->SA)
                     ];
                 }
             } else {
@@ -149,7 +151,7 @@ class Request extends BaseModel
                     'department_date' => $this->departureDate,
                     'flight_time' => $item->L->V->{'@attributes'}->TT ?? null,
                     'route' => $item->L->V->{'@attributes'}->SA ?? null,
-//                    'routeName' => City::getRouteName($item->L->V->{'@attributes'}->SA)
+                    //                    'routeName' => City::getRouteName($item->L->V->{'@attributes'}->SA)
                 ];
             }
 
@@ -162,7 +164,7 @@ class Request extends BaseModel
                         'department_date' => $this->returnDate,
                         'flight_time' => $r->{'@attributes'}->TT ?? null,
                         'route' => $r->{'@attributes'}->SA ?? null,
-//                        'routeName' => City::getRouteName($r->{'@attributes'}->SA)
+                        //                        'routeName' => City::getRouteName($r->{'@attributes'}->SA)
                     ];
                 }
             } else {
@@ -171,7 +173,7 @@ class Request extends BaseModel
                     'department_date' => $this->returnDate,
                     'flight_time' => $item->R->V->{'@attributes'}->TT ?? null,
                     'route' => $item->R->V->{'@attributes'}->SA ?? null,
-//                    'routeName' => City::getRouteName($item->R->V->{'@attributes'}->SA)
+                    //                    'routeName' => City::getRouteName($item->R->V->{'@attributes'}->SA)
                 ];
             }
 

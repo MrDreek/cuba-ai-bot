@@ -34,3 +34,4 @@ Route::prefix('tour')->group(function () {
 
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('test', 'TestController@test');

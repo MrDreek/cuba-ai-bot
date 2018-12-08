@@ -1,5 +1,7 @@
 <?php
 
+use Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider;
+
 return [
 
     /*
@@ -92,7 +94,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -105,7 +107,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------

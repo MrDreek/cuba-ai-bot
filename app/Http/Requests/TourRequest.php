@@ -18,7 +18,7 @@ class TourRequest extends Request
             'hotel_ids' => 'string',
             'nights' => 'required|integer',
             'adults' => 'required|integer',
-            'start_date' => 'required|dateformat:d.m.Y',
+            'start_date' => 'required|date',
             'kids' => 'integer',
             'kids_ages' => 'required_with:kids|string',
             'stars_from' => 'integer|min:1|max:5',
