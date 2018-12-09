@@ -45,8 +45,7 @@ class BaseModel extends Eloquent
             $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'), config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
         }
 
-        $test = $response->get();
-        return json_decode($test);
+        return json_decode($response->get());
     }
 
     protected static function xmlGet($url)

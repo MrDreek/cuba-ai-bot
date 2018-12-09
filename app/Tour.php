@@ -42,10 +42,7 @@ class Tour extends BaseModel
             unset($params['to_city']);
         }
 
-        $startDate = (new DateTime(DateHelper::parseDate($params['start_date'])))->format('d.m.Y');
-        $url .= '&' . 'start_date' . '=' . $startDate;
-
-        unset($params['start_date']);
+        $params['start_date'] = (new DateTime(DateHelper::parseDate($params['start_date'])))->format('d.m.Y');
 
         foreach ($params as $key => $item) {
             $url .= '&' . $key . '=' . $item;
@@ -58,6 +55,7 @@ class Tour extends BaseModel
         }
 
         $request = new Request();
+        $request->params = array_merge($params, ['from_city' => $from_city]);
         $request->request_id = $response->request_id;
 
         if (!$request->save()) {
@@ -89,6 +87,7 @@ class Tour extends BaseModel
     {
         $url = self::GET_RESULTS_URL . $req->request_id;
         $response = self::curlToWithTourHeaders($url);
+        $request = Request::where('request_id', $req->request_id)->first();
 
         if (isset($response->hotels)) {
             if (empty($response->hotels)) {
@@ -130,5 +129,18 @@ class Tour extends BaseModel
             return true;
         }
         return ['error' => $response->error, 'code' => 500];
+    }
+
+    private static function createQueryLink($params)
+    {
+        if ($params === null) {
+            return '';
+        }
+
+        return '?from=St.Petersburg-RU'
+            . '?start_date=' . ($params['start_date'] ?? date('d.m.Y'))
+            . '&nights=' . ($params['nights'] ?? 0)
+            . '&adults=' . ($params['adults'] ?? 0)
+            . '&kids=' . ($params['kids'] ?? 0);
     }
 }

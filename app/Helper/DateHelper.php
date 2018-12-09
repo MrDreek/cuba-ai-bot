@@ -30,16 +30,18 @@ class DateHelper
 
     public static function parseDate($date)
     {
+        $date = \trim($date);
         try {
             $d = Carbon::parse($date)->format('d.m.Y') ?? false;
         } catch (\Exception $e) {
+            $date = self::yearCheck($date);
             $month = explode(' ', $date)[1] ?? null;
 
             if ($month === null) {
                 return false;
             }
 
-            $returned = str_replace(array_keys(self::MONTH_LIST), array_values(self::MONTH_LIST), $date);
+            $returned = \str_replace(\array_keys(self::MONTH_LIST), \array_values(self::MONTH_LIST), $date);
 
             if ($returned === $date) {
                 return false;
@@ -55,5 +57,15 @@ class DateHelper
         }
 
         return $d;
+    }
+
+    private static function yearCheck($date)
+    {
+        $explode = \explode(' ', $date) ?? null;
+        if (isset($explode[3])) {
+            unset($explode[3]);
+        }
+
+        return \implode(' ', $explode);
     }
 }

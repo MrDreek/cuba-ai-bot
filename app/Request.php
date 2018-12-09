@@ -13,6 +13,7 @@ use DateTime;
  * @property mixed       link
  * @property array|mixed tickets
  * @property mixed       request_id
+ * @property mixed       params
  * @method static where(string $string, string $param)
  */
 class Request extends BaseModel
