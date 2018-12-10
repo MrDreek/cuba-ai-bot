@@ -6,6 +6,8 @@ use App\Helper\DateHelper;
 use DateTime;
 
 /**
+ * App\Request
+ *
  * @property int|string  requestId
  * @property mixed       status
  * @property DateTime    departureDate
@@ -15,6 +17,11 @@ use DateTime;
  * @property mixed       request_id
  * @property mixed       params
  * @method static where(string $string, string $param)
+ * @property-read mixed $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Request newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Request newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Request query()
+ * @mixin \Eloquent
  */
 class Request extends BaseModel
 {

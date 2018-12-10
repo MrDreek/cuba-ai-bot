@@ -5,6 +5,15 @@ namespace App;
 use App\Helper\DateHelper;
 use DateTime;
 
+/**
+ * App\Tour
+ *
+ * @property mixed $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tour newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tour newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tour query()
+ * @mixin \Eloquent
+ */
 class Tour extends BaseModel
 {
     protected $collection = 'tour_collection';
@@ -54,7 +63,7 @@ class Tour extends BaseModel
             return ['message' => 'Неправельный ответ от сервера АПИ', 'code' => 500];
         }
 
-        $request = new Request();
+        $request = Request::firstOrNew(['request_id' => $response->request_id]);
         $request->params = array_merge($params, ['from_city' => $from_city]);
         $request->request_id = $response->request_id;
 
@@ -87,7 +96,7 @@ class Tour extends BaseModel
     {
         $url = self::GET_RESULTS_URL . $req->request_id;
         $response = self::curlToWithTourHeaders($url);
-        $request = Request::where('request_id', $req->request_id)->first();
+        //        $request = Request::where('request_id', $req->request_id)->first();
 
         if (isset($response->hotels)) {
             if (empty($response->hotels)) {

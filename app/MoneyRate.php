@@ -5,9 +5,16 @@ namespace App;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
+ * App\MoneyRate
+ *
  * @property string updated_at
  * @property string value
  * @property int|null|string name
+ * @property-read mixed $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\MoneyRate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\MoneyRate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\MoneyRate query()
+ * @mixin \Eloquent
  */
 class MoneyRate extends BaseModel
 {

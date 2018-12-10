@@ -55,6 +55,4 @@ class TourController extends Controller
         return new TourResource($req);
 
     }
-
-
 }

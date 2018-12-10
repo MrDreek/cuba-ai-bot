@@ -3,8 +3,15 @@
 namespace App;
 
 /**
+ * App\Weather
+ *
  * @property string value
  * @property int|null|string name
+ * @property-read mixed $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Weather newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Weather newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Weather query()
+ * @mixin \Eloquent
  */
 class Weather extends BaseModel
 {

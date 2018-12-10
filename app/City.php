@@ -3,11 +3,18 @@
 namespace App;
 
 /**
+ * App\City
+ *
  * @property mixed location
- * @property  mixed name
- * @property  mixed iata
+ * @property mixed name
+ * @property mixed iata
  * @property array|mixed airports
  * @method static where(string $string, $departure_city)
+ * @property-read mixed $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\City newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\City newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\City query()
+ * @mixin \Eloquent
  */
 class City extends BaseModel
 {
