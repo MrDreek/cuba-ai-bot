@@ -17,7 +17,7 @@ use DateTime;
  * @property mixed       request_id
  * @property mixed       params
  * @method static where(string $string, string $param)
- * @property-read mixed $id
+ * @property-read mixed  $id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Request newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Request newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Request query()
@@ -31,6 +31,8 @@ class Request extends BaseModel
     public const DETAIL_URL = '${host}/api/RequestInfo/?R=${request_id}';
     public const STATUS_URL = '${host}/api/RequestState/?R=${request_id}';
     public const RESULT_URL = '${host}/api/Fares/?R=${request_id}';
+
+    protected $fillable = ['request_id'];
 
     private const SC = [
         'эконом' => 'E',
@@ -60,7 +62,6 @@ class Request extends BaseModel
         $AD = $request->AD ?: 1;
         $CN = $request->CN ?: 0;
         $IN = $request->IN ?: 0;
-
 
         $SC = self::SC['эконом'];
         if (($request->SC !== null) && $request->SC === 'бизнес/первый') {
@@ -162,7 +163,6 @@ class Request extends BaseModel
                     //                    'routeName' => City::getRouteName($item->L->V->{'@attributes'}->SA)
                 ];
             }
-
 
             $arrFrom = [];
             if (!isset($item->R->V->{'@attributes'})) {
