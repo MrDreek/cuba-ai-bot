@@ -8,7 +8,6 @@
 
 namespace App\Helper;
 
-
 use Illuminate\Support\Carbon;
 
 class DateHelper
@@ -32,9 +31,15 @@ class DateHelper
     {
         $date = \trim($date);
         try {
-            $d = Carbon::parse($date)->format('d.m.Y') ?? false;
+            $needYearCheek = false;
+            $date = self::yearCheck($date, $needYearCheek);
+
+            $d = Carbon::parse($date) ?? false;
+
+            if ($d && $needYearCheek && $d->lt(Carbon::now())) {
+                $d->addYear();
+            }
         } catch (\Exception $e) {
-            $date = self::yearCheck($date);
             $month = explode(' ', $date)[1] ?? null;
 
             if ($month === null) {
@@ -44,28 +49,56 @@ class DateHelper
             $returned = \str_replace(\array_keys(self::MONTH_LIST), \array_values(self::MONTH_LIST), $date);
 
             if ($returned === $date) {
-                return false;
+                $returned = \str_replace(' ', '.', $date);
             }
 
             try {
-                $d = Carbon::parse($returned)->format('d.m.Y') ?? false;
+                $d = Carbon::parse($returned) ?? false;
+                if ($needYearCheek && $d->lt(Carbon::now())) {
+                    $d->addYear();
+                }
             } catch (\Exception $e) {
                 return false;
             }
 
-            return $d;
+            return $d->format('d.m.Y');
         }
 
-        return $d;
+        return $d->format('d.m.Y');
     }
 
-    private static function yearCheck($date)
+    private static function yearCheck($date, &$needYearCheek): string
     {
-        $explode = \explode(' ', $date) ?? null;
-        if (isset($explode[3])) {
-            unset($explode[3]);
+        $explode = \preg_split("/(\s|\.|\/)/", $date) ?? null;
+
+        $year = [];
+
+        if (isset($explode[0])) {
+            $year[] = $explode[0];
         }
 
-        return \implode(' ', $explode);
+        if (isset($explode[1])) {
+            $year[] = $explode[1];
+        }
+
+        if (!isset($explode[2])) {
+            $needYearCheek = true;
+            $year[] = date('Y');
+        } else {
+            $year[] = $explode[2];
+        }
+
+        return \implode(' ', $year);
+    }
+
+    private static function check($date)
+    {
+        $explode = \preg_split("/(\s|\.|\/)/", $date) ?? null;
+
+        if (!isset($explode[2])) {
+            return true;
+        }
+
+        return false;
     }
 }
