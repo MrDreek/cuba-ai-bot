@@ -16,7 +16,7 @@ class TicketRequest extends Request
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'departure_city' => 'required',
@@ -30,7 +30,7 @@ class TicketRequest extends Request
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'departure_city.required' => 'Необходимо указать город отправленя',

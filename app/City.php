@@ -5,12 +5,12 @@ namespace App;
 /**
  * App\City
  *
- * @property mixed location
- * @property mixed name
- * @property mixed iata
+ * @property mixed       location
+ * @property mixed       name
+ * @property mixed       iata
  * @property array|mixed airports
  * @method static where(string $string, $departure_city)
- * @property-read mixed $id
+ * @property-read mixed  $id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\City newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\City newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\City query()
@@ -22,7 +22,7 @@ class City extends BaseModel
 
     private const CITIES_URL = 'https://api.level.travel/references/airports';
 
-    public static function getCity()
+    public static function getCity(): bool
     {
         $response = self::curlToWithTourHeaders(self::CITIES_URL);
 
@@ -32,12 +32,13 @@ class City extends BaseModel
         return true;
     }
 
-    private static function saveAirportAndCity($airport)
+    private static function saveAirportAndCity($airport): void
     {
         $cityIata = $airport->city->iata;
 
         $city = self::where('iata', $cityIata)->first();
 
+        /** @var $city City */
         if ($city !== null) {
             $airports = $city->airports;
             unset($airport->city);

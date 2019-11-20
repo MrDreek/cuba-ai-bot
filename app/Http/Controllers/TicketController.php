@@ -42,7 +42,7 @@ class TicketController extends Controller
         }
 
         $result = $myRequest->getResult();
-        if (\is_array($result)) {
+        if (is_array($result)) {
             return response()->json($result, 200);
         }
 

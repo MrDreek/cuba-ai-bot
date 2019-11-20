@@ -27,7 +27,7 @@ class MoneyRate extends BaseModel
         'CUC_USD',
     ];
 
-    public const URL_TEMPLATE = 'http://free.currencyconverterapi.com/api/v5/convert?q=${q}&compact=y';
+    public const URL_TEMPLATE = 'http://free.currencyconverterapi.com/api/v5/convert?q=${q}&compact=y&apiKey=${key}';
 
     private static function saveMoneyRate($rates, $update)
     {
@@ -40,7 +40,7 @@ class MoneyRate extends BaseModel
         $rateDb->save();
     }
 
-    public static function findOrCreate()
+    public static function findOrCreate(): void
     {
         $moneyRate = self::first();
         if ($moneyRate === null) {
@@ -50,10 +50,12 @@ class MoneyRate extends BaseModel
         }
     }
 
-    private static function updateRate($update = null)
+    private static function updateRate($update = null): void
     {
+        $apiKey = config('app.corrconv_key');
+        $rates = null;
         foreach (self::MONEY as $item) {
-            $url = str_replace(['${q}'], $item, self::URL_TEMPLATE);
+            $url = str_replace(['${q}', '${key}'], [$item, $apiKey], self::URL_TEMPLATE);
             $rates[] = self::curlTo($url);
         }
         if ($rates === null) {

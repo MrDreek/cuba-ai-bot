@@ -17,7 +17,7 @@ class MoneyRateController extends Controller
     /**
      * Метод возвращает курс валют по заданым параметрам из базы, либо получает их с апи, записывает их в базу  и возвращает
      */
-    public function getRate()
+    public function getRate(): MoneyRateResource
     {
         MoneyRate::findOrCreate();
         return new MoneyRateResource(MoneyRate::first());

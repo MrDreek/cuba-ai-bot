@@ -11,12 +11,13 @@ class MoneyRates extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
-        return $this->collection->map(function ($resource) {
+        return $this->collection->map(static function ($resource) {
             return [$resource->name => $resource->value];
         })->all();
     }

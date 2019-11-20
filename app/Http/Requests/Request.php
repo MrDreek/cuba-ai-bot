@@ -8,8 +8,8 @@
 
 namespace App\Http\Requests;
 
-
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class Request extends FormRequest
 {
@@ -17,7 +17,7 @@ class Request extends FormRequest
 
     public function input($key = null, $default = null)
     {
-        $input = $this->getInputSource()->all() + $this->query->all();
+        $input = array_merge($this->getInputSource()->all(), $this->query->all());
 
         // replace input with trimmed input
         $input = $this->getTrimmedInput($input);
@@ -28,16 +28,15 @@ class Request extends FormRequest
     /**
      * Get trimmed input
      *
-     * @param array $input
+     * @param  array  $input
      *
      * @return array
      */
-    protected function getTrimmedInput(array $input)
+    protected function getTrimmedInput(array $input): array
     {
         if ($this->trim) {
-            array_walk_recursive($input, function (&$item, $key) {
-
-                if (\is_string($item) && !str_contains($key, 'password')) {
+            array_walk_recursive($input, static function (&$item, $key) {
+                if (is_string($item) && !Str::contains($key, 'password')) {
                     $item = trim($item);
                 }
             });
@@ -51,7 +50,7 @@ class Request extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }

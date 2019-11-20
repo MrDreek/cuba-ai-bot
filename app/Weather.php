@@ -5,9 +5,9 @@ namespace App;
 /**
  * App\Weather
  *
- * @property string value
+ * @property string          value
  * @property int|null|string name
- * @property-read mixed $id
+ * @property-read mixed      $id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Weather newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Weather newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Weather query()
@@ -19,14 +19,21 @@ class Weather extends BaseModel
 
     private const URL_WEATHER = 'https://api.weather.yandex.ru/v1/forecast?lat=${lat}&lon=${lon}&limit=2&hours=false&extra=false';
 
-    private static function getWeather($name, $update = null)
+    private static function getWeather($name, $update = null): Weather
     {
         $city = City::where('name', $name)->firstOrFail();
-        $url = str_replace(array('${lat}', '${lon}'), array($city->location['latitude'], $city->location['longitude']), self::URL_WEATHER);
+        $url = str_replace(
+            ['${lat}', '${lon}'],
+            [
+                $city->location['latitude'],
+                $city->location['longitude']
+            ],
+            self::URL_WEATHER
+        );
         return self::saveWeather(self::curlTo($url, true)->fact, $name, $update);
     }
 
-    public static function findOrCreate($name)
+    public static function findOrCreate($name): Weather
     {
         /** @var Weather $obj */
         $obj = static::where('name', $name)->first();

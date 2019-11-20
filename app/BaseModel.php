@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Exceptions\MyRuntimeException;
 use Ixudra\Curl\Facades\Curl;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 /**
  * App\BaseModel
  *
- * @property mixed updated_at
+ * @property mixed      updated_at
  * @property-read mixed $id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\BaseModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\BaseModel newQuery()
@@ -21,6 +22,23 @@ class BaseModel extends Eloquent
 
     public $timestamps = false;
 
+    private static function sendRequest($response)
+    {
+        // если нужен прокси
+        if (config('app.proxy')) {
+            $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'),
+                config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
+        }
+
+        $response = $response->returnResponseObject()->get();
+
+        if ($response->status !== 200) {
+            throw new MyRuntimeException('Ошибка времени выполнения. Ответ: '.json_encode($response->content,
+                    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        }
+        return json_decode($response->content);
+    }
+
     protected static function curlTo($url, $yandexHeader = false)
     {
         $response = Curl::to($url);
@@ -30,12 +48,7 @@ class BaseModel extends Eloquent
             $response = $response->withHeader("X-Yandex-API-Key: $key");
         }
 
-        // если нужен прокси
-        if (config('app.proxy')) {
-            $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'), config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
-        }
-
-        return json_decode($response->get());
+        return self::sendRequest($response);
     }
 
     protected static function curlToWithTourHeaders($url)
@@ -44,15 +57,10 @@ class BaseModel extends Eloquent
 
         $key = config('app.level_travel');
         $response = $response->withHeader('Accept: application/vnd.leveltravel.v3');
-        $response = $response->withHeader('Authorization: Token token="' . $key . '"');
+        $response = $response->withHeader('Authorization: Token token="'.$key.'"');
 
 
-        // если нужен прокси
-        if (config('app.proxy')) {
-            $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'), config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
-        }
-
-        return json_decode($response->get());
+        return self::sendRequest($response);
     }
 
     protected static function xmlGet($url)
@@ -61,10 +69,18 @@ class BaseModel extends Eloquent
 
         // если нужен прокси
         if (config('app.proxy')) {
-            $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'), config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
+            $response = $response->withProxy(config('app.proxy_url'), config('app.proxy_port'),
+                config('app.proxy_type'), config('app.proxy_username'), config('app.proxy_password'));
         }
 
-        return json_decode(json_encode(simplexml_load_string($response->get())));
+        $response = $response->returnResponseObject()->get();
+
+        if ($response->status !== 200) {
+            throw new MyRuntimeException('Ошибка времени выполнения. Ответ: '.json_encode($response->content,
+                    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        }
+
+        return json_decode(json_encode(simplexml_load_string($response->content)));
     }
 
     /**

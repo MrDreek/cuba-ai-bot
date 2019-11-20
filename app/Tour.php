@@ -4,15 +4,17 @@ namespace App;
 
 use App\Helper\DateHelper;
 use DateTime;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Tour
  *
  * @property mixed $id
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tour newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tour newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tour query()
- * @mixin \Eloquent
+ * @method static Builder|Tour newModelQuery()
+ * @method static Builder|Tour newQuery()
+ * @method static Builder|Tour query()
+ * @mixin Eloquent
  */
 class Tour extends BaseModel
 {
@@ -39,7 +41,7 @@ class Tour extends BaseModel
 
     public static function startSearch($params)
     {
-        $url = self::START_SEARCH_URL . self::TO_CONTRY;
+        $url = self::START_SEARCH_URL.self::TO_CONTRY;
 
         $from_city = City::where('name', $params['from_city'])->firstOrFail()->iata;
         $url .= "&from_city=$from_city";
@@ -54,7 +56,7 @@ class Tour extends BaseModel
         $params['start_date'] = (new DateTime(DateHelper::parseDate($params['start_date'])))->format('d.m.Y');
 
         foreach ($params as $key => $item) {
-            $url .= '&' . $key . '=' . $item;
+            $url .= '&'.$key.'='.$item;
         }
 
         $response = self::curlToWithTourHeaders($url);
@@ -74,9 +76,9 @@ class Tour extends BaseModel
         return $request->request_id;
     }
 
-    public function checkStatus()
+    public function checkStatus(): array
     {
-        $url = self::CHECK_URL . $this->request_id;
+        $url = self::CHECK_URL.$this->request_id;
         $response = self::curlToWithTourHeaders($url);
 
         if ($response->success) {
@@ -92,16 +94,16 @@ class Tour extends BaseModel
         return ['message' => 'Внутренняя ошибка сервера', 'error' => $response->error];
     }
 
-    public static function getResults($req)
+    public static function getResults(Request $req)
     {
-        $url = self::GET_RESULTS_URL . $req->request_id;
+        $url = self::GET_RESULTS_URL.$req->request_id;
         $response = self::curlToWithTourHeaders($url);
         //        $request = Request::where('request_id', $req->request_id)->first();
 
         if (isset($response->hotels)) {
             if (empty($response->hotels)) {
                 $r = [
-                    'code' => 204,
+                    'code'    => 204,
                     'message' => 'Ничего не найдено!',
                 ];
 
@@ -113,7 +115,7 @@ class Tour extends BaseModel
                 $food = [];
 
                 foreach ($hotel->pansion_prices as $key => $pansion_price) {
-                    $food[$key] = $key . '(' . self::FOOD[$key] . ')';
+                    $food[$key] = $key.'('.self::FOOD[$key].')';
                 }
 
                 $tour = new self;
@@ -126,7 +128,7 @@ class Tour extends BaseModel
                 $tour->min_price = number_format($hotel->min_price, 2);
                 $tour->max_price = number_format($hotel->max_price, 2);
                 $tour->food = implode(', ', $food);
-                $tour->link = self::LEVEL_TRAVEL_DOMAIN . $hotel->hotel->link;
+                $tour->link = self::LEVEL_TRAVEL_DOMAIN.$hotel->hotel->link;
                 $tour->save();
 
                 $hotels[] = $tour;
@@ -138,18 +140,5 @@ class Tour extends BaseModel
             return true;
         }
         return ['error' => $response->error, 'code' => 500];
-    }
-
-    private static function createQueryLink($params)
-    {
-        if ($params === null) {
-            return '';
-        }
-
-        return '?from=St.Petersburg-RU'
-            . '?start_date=' . ($params['start_date'] ?? date('d.m.Y'))
-            . '&nights=' . ($params['nights'] ?? 0)
-            . '&adults=' . ($params['adults'] ?? 0)
-            . '&kids=' . ($params['kids'] ?? 0);
     }
 }

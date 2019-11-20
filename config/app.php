@@ -35,6 +35,7 @@ return [
     'awad_host' => env('AWAD_HOST'),
     'awad_key' => env('AWAD_KEY'),
     'level_travel' => env('LEVEL_TRAVEL'),
+    'corrconv_key' => env('CORRCONV_KEY'),
 
     'proxy' => env('PROXY'),                   // нужен ли прокси(true or false)
     'proxy_url' => env('PROXY_URL'),           // url прокси
@@ -166,6 +167,7 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...

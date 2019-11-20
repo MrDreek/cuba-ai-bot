@@ -5,7 +5,9 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -27,11 +29,12 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  Request    $request
+     * @param  Exception  $exception
+     *
+     * @return Response
      */
-    public function render($request, Exception $exception): \Symfony\Component\HttpFoundation\Response
+    public function render($request, Exception $exception): Response
     {
         if ($exception instanceof ValidationException) {
             $error = [];
@@ -52,13 +55,20 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
                 'message' => $exception->getMessage(),
-                'code' => 404
+                'code'    => 404
             ], 404);
+        }
+
+        if ($exception instanceof MyRuntimeException) {
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'code'    => $exception->getStatusCode()
+            ], 500);
         }
 
         return response()->json([
             'message' => 'Не обработанная ошибка',
-            'error' => $exception->getMessage()
+            'error'   => $exception->getMessage()
         ], 500);
     }
 }

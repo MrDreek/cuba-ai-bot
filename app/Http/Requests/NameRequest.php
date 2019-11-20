@@ -12,18 +12,18 @@ class NameRequest extends Request
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|exists:cities_collection,name'
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.required' => 'Требуется указать название города',
-            'name.exists' => 'Город не найден',
+            'name.exists'   => 'Город не найден',
         ];
     }
 }

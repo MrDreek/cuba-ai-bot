@@ -14,14 +14,14 @@ class RequestIdRequest extends Request
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'requestId' => 'required',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'requestId.required' => 'Требуется указать requestId'

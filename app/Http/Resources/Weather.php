@@ -59,5 +59,4 @@ class Weather extends JsonResource
             'source' => $this->source
         ];
     }
-
 }

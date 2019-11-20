@@ -11,10 +11,12 @@ class WeatherController extends Controller
 {
     /**
      * Метод возвращает погоду из базы, или обновляет данные, если они устаревшие
-     * @param NameRequest $request
+     *
+     * @param  NameRequest  $request
+     *
      * @return WeatherResource
      */
-    public function getWeather(NameRequest $request)
+    public function getWeather(NameRequest $request): WeatherResource
     {
         $weather = Weather::findOrCreate($request->name);
         return new WeatherResource($weather);

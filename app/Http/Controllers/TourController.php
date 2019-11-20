@@ -17,9 +17,8 @@ class TourController extends Controller
      */
     public function getCity()
     {
-        if (City::getCity()) {
-            return response()->json(['status' => 'OK']);
-        }
+        City::getCity();
+        return response()->json(['status' => 'OK']);
     }
 
     public function search(TourRequest $request)

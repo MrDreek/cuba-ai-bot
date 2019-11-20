@@ -12,7 +12,7 @@ class TourRequest extends Request
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'from_city' => 'required|exists:cities_collection,name',
@@ -28,7 +28,7 @@ class TourRequest extends Request
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'from_city.required' => 'Необходимо указать город вылета',

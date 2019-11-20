@@ -4,6 +4,10 @@ namespace App;
 
 use App\Helper\DateHelper;
 use DateTime;
+use Eloquent;
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use stdClass;
 
 /**
  * App\Request
@@ -18,10 +22,10 @@ use DateTime;
  * @property mixed       params
  * @method static where(string $string, string $param)
  * @property-read mixed  $id
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Request newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Request newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Request query()
- * @mixin \Eloquent
+ * @method static Builder|Request newModelQuery()
+ * @method static Builder|Request newQuery()
+ * @method static Builder|Request query()
+ * @mixin Eloquent
  */
 class Request extends BaseModel
 {
@@ -35,11 +39,17 @@ class Request extends BaseModel
     protected $fillable = ['request_id'];
 
     private const SC = [
-        'эконом' => 'E',
+        'эконом'              => 'E',
         'бизнес/первый класс' => 'B',
     ];
 
-    public static function createRequest($request)
+    /**
+     * @param $request
+     *
+     * @return array
+     * @throws Exception
+     */
+    public static function createRequest($request): array
     {
         $departureDate = new DateTime(DateHelper::parseDate($request->departure_date));
         $departureDate_day = $departureDate->format('d');
@@ -48,7 +58,7 @@ class Request extends BaseModel
         $iataDepartureCity = City::where('name', $request->departure_city)->firstOrFail()->iata;
         $iataArrivalCity = City::where('name', $request->arrival_city)->firstOrFail()->iata;
 
-        $to = $departureDate_day . $departureDate_month . $iataDepartureCity . $iataArrivalCity;
+        $to = $departureDate_day.$departureDate_month.$iataDepartureCity.$iataArrivalCity;
         $from = '';
 
         if ($request->return_date !== null) {
@@ -56,7 +66,7 @@ class Request extends BaseModel
             $returnDate_day = $returnDate->format('d');
             $returnDate_month = $returnDate->format('m');
 
-            $from = $returnDate_day . $returnDate_month . $iataArrivalCity . $iataDepartureCity;
+            $from = $returnDate_day.$returnDate_month.$iataArrivalCity.$iataDepartureCity;
         }
 
         $AD = $request->AD ?: 1;
@@ -71,7 +81,8 @@ class Request extends BaseModel
         $host = config('app.awad_host');
         $key = config('app.awad_key');
 
-        $url = str_replace(['${host}', '${to}', '${from}', '${AD}', '${CN}', '${IN}', '${SC}', '${code}'], [$host, $to, $from, $AD, $CN, $IN, $SC, $key], self::INIT_URL);
+        $url = str_replace(['${host}', '${to}', '${from}', '${AD}', '${CN}', '${IN}', '${SC}', '${code}'],
+            [$host, $to, $from, $AD, $CN, $IN, $SC, $key], self::INIT_URL);
 
         $requestId = self::xmlGet($url)->{'@attributes'};// xml зло!
 
@@ -86,7 +97,7 @@ class Request extends BaseModel
         return ['error' => $requestId->Error];
     }
 
-    public function check()
+    public function check(): array
     {
         $host = config('app.awad_host');
         $url = str_replace(['${host}', '${request_id}'], [$host, $this->requestId], self::STATUS_URL);
@@ -99,7 +110,7 @@ class Request extends BaseModel
             $this->status = $status->Completed;
             $this->save();
 
-            if ($this->status !== '100') {
+            if ($status->Completed !== '100') {
                 $message = 'Результат ещё не готов!';
             }
         }
@@ -136,7 +147,7 @@ class Request extends BaseModel
             }
         }
 
-        if ($results->F instanceof \stdClass) {
+        if ($results->F instanceof stdClass) {
             $arr = [0 => $results->F];
         } else {
             $arr = $results->F;
@@ -149,8 +160,8 @@ class Request extends BaseModel
                     $arrTo[] = [
                         'department_time' => $l->{'@attributes'}->DT ?? null,
                         'department_date' => $this->departureDate,
-                        'flight_time' => $l->{'@attributes'}->TT ?? null,
-                        'route' => $l->{'@attributes'}->SA ?? null,
+                        'flight_time'     => $l->{'@attributes'}->TT ?? null,
+                        'route'           => $l->{'@attributes'}->SA ?? null,
                         //                        'routeName' => City::getRouteName($l->{'@attributes'}->SA)
                     ];
                 }
@@ -158,8 +169,8 @@ class Request extends BaseModel
                 $arrTo[] = [
                     'department_time' => $item->L->V->{'@attributes'}->DT ?? null,
                     'department_date' => $this->departureDate,
-                    'flight_time' => $item->L->V->{'@attributes'}->TT ?? null,
-                    'route' => $item->L->V->{'@attributes'}->SA ?? null,
+                    'flight_time'     => $item->L->V->{'@attributes'}->TT ?? null,
+                    'route'           => $item->L->V->{'@attributes'}->SA ?? null,
                     //                    'routeName' => City::getRouteName($item->L->V->{'@attributes'}->SA)
                 ];
             }
@@ -170,8 +181,8 @@ class Request extends BaseModel
                     $arrFrom[] = [
                         'department_time' => $r->{'@attributes'}->DT ?? null,
                         'department_date' => $this->returnDate,
-                        'flight_time' => $r->{'@attributes'}->TT ?? null,
-                        'route' => $r->{'@attributes'}->SA ?? null,
+                        'flight_time'     => $r->{'@attributes'}->TT ?? null,
+                        'route'           => $r->{'@attributes'}->SA ?? null,
                         //                        'routeName' => City::getRouteName($r->{'@attributes'}->SA)
                     ];
                 }
@@ -179,8 +190,8 @@ class Request extends BaseModel
                 $arrFrom[] = [
                     'department_time' => $item->R->V->{'@attributes'}->DT ?? null,
                     'department_date' => $this->returnDate,
-                    'flight_time' => $item->R->V->{'@attributes'}->TT ?? null,
-                    'route' => $item->R->V->{'@attributes'}->SA ?? null,
+                    'flight_time'     => $item->R->V->{'@attributes'}->TT ?? null,
+                    'route'           => $item->R->V->{'@attributes'}->SA ?? null,
                     //                    'routeName' => City::getRouteName($item->R->V->{'@attributes'}->SA)
                 ];
             }

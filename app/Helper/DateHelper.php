@@ -8,6 +8,7 @@
 
 namespace App\Helper;
 
+use Exception;
 use Illuminate\Support\Carbon;
 
 class DateHelper
@@ -29,7 +30,7 @@ class DateHelper
 
     public static function parseDate($date)
     {
-        $date = \trim($date);
+        $date = trim($date);
         try {
             $needYearCheek = false;
             $date = self::yearCheck($date, $needYearCheek);
@@ -39,17 +40,17 @@ class DateHelper
             if ($d && $needYearCheek && $d->lt(Carbon::now())) {
                 $d->addYear();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $month = explode(' ', $date)[1] ?? null;
 
             if ($month === null) {
                 return false;
             }
 
-            $returned = \str_replace(\array_keys(self::MONTH_LIST), \array_values(self::MONTH_LIST), $date);
+            $returned = str_replace(array_keys(self::MONTH_LIST), array_values(self::MONTH_LIST), $date);
 
             if ($returned === $date) {
-                $returned = \str_replace(' ', '.', $date);
+                $returned = str_replace(' ', '.', $date);
             }
 
             try {
@@ -57,7 +58,7 @@ class DateHelper
                 if ($needYearCheek && $d->lt(Carbon::now())) {
                     $d->addYear();
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return false;
             }
 
@@ -69,7 +70,7 @@ class DateHelper
 
     private static function yearCheck($date, &$needYearCheek): string
     {
-        $explode = \preg_split("/(\s|\.|\/)/", $date) ?? null;
+        $explode = preg_split("/(\s|\.|\/)/", $date);
 
         $year = [];
 
@@ -88,12 +89,12 @@ class DateHelper
             $year[] = $explode[2];
         }
 
-        return \implode(' ', $year);
+        return implode(' ', $year);
     }
 
-    private static function check($date)
+    private static function check($date): bool
     {
-        $explode = \preg_split("/(\s|\.|\/)/", $date) ?? null;
+        $explode = preg_split("/(\s|\.|\/)/", $date);
 
         if (!isset($explode[2])) {
             return true;
