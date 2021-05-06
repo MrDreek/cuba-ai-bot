@@ -10,7 +10,7 @@
         "fideloper/proxy": "4.2.*",
         "ixudra/curl": "6.18.*",
         "jenssegers/mongodb": "3.6.*",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "6.18.*",
         "laravel/tinker": "1.0.*",
         "maatwebsite/excel": "3.1.*",
         "rap2hpoutre/laravel-log-viewer": "1.3.*",
